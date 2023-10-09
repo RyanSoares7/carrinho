@@ -1,7 +1,23 @@
-const App = () => {
-  return(
-    <div className='text-white'>Olá mundo.</div>
-  )
-};
+import { createBrowserRouter } from 'react-router-dom';
+import { Home } from './pages/home/Home';
+import { Cart } from './pages/cart/Cart';
 
-export default App;
+import { Layout } from './components/layout/Layout';
+
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />,
+      },
+    ],
+  },
+]);
+
+export { router };
