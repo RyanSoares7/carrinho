@@ -3,13 +3,21 @@ import { BsCartPlus } from 'react-icons/bs';
 
 import { api } from '../../services/api';
 
+interface ProductProps {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  cover: string;
+}
+
 export const Home = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<ProductProps[]>([]);
 
   useEffect(() => {
     async function getProducts() {
       const response = await api.get('/products');
-      console.log(response.data);
+      setProducts(response.data);
     }
 
     getProducts();
@@ -23,21 +31,28 @@ export const Home = () => {
         </h1>
 
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5'>
-          <section className='w-full'>
-            <img
-              className='w-full rounded-lg max-h-70 mb-2'
-              src='https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MME73?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1632861342000'
-              alt='air pods'
-            />
-            <p className='font-medium mt-1 mb-2'>Airpods Pro 3</p>
+          {products.map((item) => (
+            <section className='w-full' key={item.id}>
+              <img
+                className='w-full rounded-lg max-h-70 mb-2'
+                src={item.cover}
+                alt={item.title}
+              />
+              <p className='font-medium mt-1 mb-2'>{item.title}</p>
 
-            <div className='flex gap-3 items-center'>
-              <strong className='text-zinc-700/90'>R$ 1000</strong>
-              <button className='bg-zinc-900 p-1 rounded'>
-                <BsCartPlus size={20} color='#FFF' />
-              </button>
-            </div>
-          </section>
+              <div className='flex gap-3 items-center'>
+                <strong className='text-zinc-700/90'>
+                  {item.price.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </strong>
+                <button className='bg-zinc-900 p-1 rounded'>
+                  <BsCartPlus size={20} color='#FFF' />
+                </button>
+              </div>
+            </section>
+          ))}
         </div>
       </main>
     </div>
