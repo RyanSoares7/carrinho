@@ -4,7 +4,7 @@ import { CartContext } from '../../contexts/CartContext';
 import { Link } from 'react-router-dom';
 
 export const Cart = () => {
-  const { cart } = useContext(CartContext);
+  const { cart, total, addItemCart, removeItemCart } = useContext(CartContext);
 
   return (
     <div className='w-full max-w-7xl px-4 mx-auto'>
@@ -33,21 +33,27 @@ export const Cart = () => {
           <strong>Preço: R${item.price.toFixed(2)}</strong>
 
           <div className='flex items-center justify-center gap-3'>
-            <button className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center'>
+            <button
+              className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center'
+              onClick={() => removeItemCart(item)}
+            >
               -
             </button>
             {item.amount}
-            <button className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center'>
+            <button
+              className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center'
+              onClick={() => addItemCart(item)}
+            >
               +
             </button>
           </div>
           <strong className='float-right max-sm:hidden'>
-            SubTotal: R${item.total}
+            SubTotal: R${item.total.toFixed(2)}
           </strong>
         </section>
       ))}
 
-      {cart.length !== 0 && <p className='font-bold mt-4'>Total: R$1.000</p>}
+      {cart.length !== 0 && <p className='font-bold mt-4'>Total: {total}</p>}
     </div>
   );
 };
