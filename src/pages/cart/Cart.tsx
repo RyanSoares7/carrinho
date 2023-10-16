@@ -33,17 +33,11 @@ export const Cart = () => {
           <strong>Preço: R${item.price.toFixed(2)}</strong>
 
           <div className='flex items-center justify-center gap-3'>
-            <button
-              className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center'
-              onClick={() => removeItemCart(item)}
-            >
+            <button className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center' onClick={() => removeItemCart(item)}>
               -
             </button>
             {item.amount}
-            <button
-              className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center'
-              onClick={() => addItemCart(item)}
-            >
+            <button className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center' onClick={() => addItemCart(item)}>
               +
             </button>
           </div>
