@@ -42,7 +42,7 @@ function CartProvider({ children }: CartProviderProps) {
 
     const data = {
       ...newItem,
-      amout: 1,
+      amount: 1,
       total: newItem.price,
     };
 
