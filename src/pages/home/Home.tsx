@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { BsCartPlus } from 'react-icons/bs';
 
 import { api } from '../../services/api';
+import { CartContext } from '../../contexts/CartContext';
+import { Cart } from '../cart/Cart';
 
-interface ProductProps {
+export interface ProductProps {
   id: number;
   title: string;
   description: string;
@@ -12,6 +14,7 @@ interface ProductProps {
 }
 
 export const Home = () => {
+  const { addItemCart } = useContext(CartContext);
   const [products, setProducts] = useState<ProductProps[]>([]);
 
   useEffect(() => {
@@ -23,6 +26,10 @@ export const Home = () => {
     getProducts();
   }, []);
 
+  function handleAddCartItem(product: ProductProps) {
+    addItemCart(product);
+  }
+
   return (
     <div>
       <main className='w-full max-w-7xl px-4 mx-auto'>
@@ -31,23 +38,26 @@ export const Home = () => {
         </h1>
 
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5'>
-          {products.map((item) => (
-            <section className='w-full' key={item.id}>
+          {products.map((product) => (
+            <section className='w-full' key={product.id}>
               <img
                 className='w-full rounded-lg max-h-70 mb-2'
-                src={item.cover}
-                alt={item.title}
+                src={product.cover}
+                alt={product.title}
               />
-              <p className='font-medium mt-1 mb-2'>{item.title}</p>
+              <p className='font-medium mt-1 mb-2'>{product.title}</p>
 
               <div className='flex gap-3 items-center'>
                 <strong className='text-zinc-700/90'>
-                  {item.price.toLocaleString('pt-BR', {
+                  {product.price.toLocaleString('pt-BR', {
                     style: 'currency',
                     currency: 'BRL',
                   })}
                 </strong>
-                <button className='bg-zinc-900 p-1 rounded'>
+                <button
+                  className='bg-zinc-900 p-1 rounded'
+                  onClick={() => handleAddCartItem(product)}
+                >
                   <BsCartPlus size={20} color='#FFF' />
                 </button>
               </div>
