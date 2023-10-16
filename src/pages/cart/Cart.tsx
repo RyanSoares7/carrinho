@@ -30,13 +30,13 @@ export const Cart = () => {
           key={item.id}
         >
           <img src={item.cover} alt={item.title} className='w-28' />
-          <strong>Preço: R${item.price}</strong>
+          <strong>Preço: R${item.price.toFixed(2)}</strong>
 
           <div className='flex items-center justify-center gap-3'>
             <button className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center'>
               -
             </button>
-              {item.amount}
+            {item.amount}
             <button className='bg-slate-600 px-2 rounded text-white font-medium flex items-center justify-center'>
               +
             </button>
